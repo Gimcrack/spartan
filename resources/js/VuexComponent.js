@@ -4,7 +4,16 @@ const global_mutations = [
     'setInterval',
     'clearInterval',
     'setTimeout',
-    'clearTimeout'
+    'clearTimeout',
+    'working',
+];
+
+const global_actions = [
+    'doneWorking'
+];
+
+const global_state = [
+    'busy'
 ];
 
 export default class VuexComponent {
@@ -17,6 +26,12 @@ export default class VuexComponent {
         this._actions = options.actions || {};
         this._getters = options.getters || {};
         this._state = options.state || {};
+    }
+
+    namespace(namespace) {
+        this._namespace = namespace;
+
+        return this;
     }
 
     mutations(...mutations) {
@@ -44,6 +59,9 @@ export default class VuexComponent {
     }
 
     init(args) {
+        if (this._namespace)
+            return this.initNamespace(args);
+
         args = args || this._args || {};
 
         let local = {
@@ -54,13 +72,39 @@ export default class VuexComponent {
         return Object.assign({}, args, {
             methods : {
                 ...mapMutations([this._mutations, ...global_mutations].flat()),
-                ...mapActions(this._actions),
+                ...mapActions([this._actions, ...global_actions].flat()),
                 ...local.methods
             },
 
             computed : {
                 ...mapGetters(this._getters),
-                ...mapState(this._state),
+                ...mapState([this._state, ...global_state].flat()),
+                ...local.computed
+            }
+        });
+    }
+
+    initNamespace(args) {
+        args = args || this._args || {};
+
+        let local = {
+            methods : (args.methods) ? args.methods : {},
+            computed : (args.computed) ? args.computed : {}
+        };
+
+        return Object.assign({}, args, {
+            methods : {
+                ...mapMutations(global_mutations),
+                ...mapMutations(this._namespace, this._mutations),
+                ...mapActions(global_actions),
+                ...mapActions(this._namespace,this._actions),
+                ...local.methods
+            },
+
+            computed : {
+                ...mapGetters(this._namespace,this._getters),
+                ...mapState(this._namespace,this._state),
+                ...mapState(global_state),
                 ...local.computed
             }
         });

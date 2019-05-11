@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div v-show="!busy">
         <div>
-            {{data.count}} {{data.name}}
+            {{count}} {{name}}
         </div>
         <div>
             {{other}}
@@ -10,29 +10,45 @@
             {{sq}}
         </div>
 
-        <input :value="data.name" @input="changeName"/>
+        <input :value="name" @input="changeName"/>
 
         <button @click="start">Start</button>
         <button @click="stop">Stop</button>
-        <button @click="incrementAsync({delay : 1000})">+1</button>
+        <button @click="increment">+1</button>
         <button @click="decrement">-1</button>
     </div>
 </template>
 
 <script>
+    import sleep from 'sleep-promise';
     import Component from '../VuexComponent';
 
     export default new Component()
-        .state('data')
+        .namespace('data')
+        .state('count','name')
         .mutations('increment','decrement','changeName')
-        .actions('incrementAsync')
+        .actions('getCachedState','dataFetched')
         .init({
+
+            async mounted() {
+                this.working();
+                await this.getCachedState();
+
+                this.doneWorking();
+
+                await sleep(5000);
+
+                this.dataFetched({count : 1000, name : 'Ben Kenobi'});
+
+                this.start();
+            },
+
             methods : {
                 start() {
                     this.setInterval({
                         key : 'increment',
                         callback : this.increment,
-                        interval : 1000
+                        interval : 100
                     });
                 },
 
@@ -43,7 +59,7 @@
 
             computed : {
                 sq() {
-                    return this.data.count * this.other * this.other;
+                    return this.count * this.other * this.other;
                 }
             },
 
@@ -54,3 +70,7 @@
             }
         });
 </script>
+
+<style lang="scss">
+
+</style>

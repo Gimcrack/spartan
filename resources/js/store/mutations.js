@@ -1,3 +1,5 @@
+import sleep from 'sleep-promise';
+
 export default {
     setTimeout(state, {key, callback, timeout}) {
         state.timeouts[key] = setTimeout(callback, timeout);
@@ -5,6 +7,7 @@ export default {
 
     clearTimeout(state, key) {
         clearTimeout(state.timeouts[key]);
+        delete state.timeouts[key];
     },
 
     setInterval(state, {key, callback, interval}) {
@@ -14,17 +17,14 @@ export default {
 
     clearInterval(state, key) {
         clearInterval(state.intervals[key]);
+        delete state.intervals[key];
     },
 
-    increment(state) {
-        state.data.count++;
+    working(state) {
+        state.busy = true;
     },
 
-    decrement(state) {
-        state.data.count--;
-    },
-
-    changeName(state, e) {
-        state.data.name = e.target.value;
+    _doneWorking(state) {
+        state.busy = false;
     }
 }
