@@ -1,6 +1,7 @@
 import {mapState, mapMutations, mapGetters, mapActions} from 'vuex';
 
-const global_mutations = [
+// --- Root Store properties, available everywhere ---
+const root_mutations = [
     'setInterval',
     'clearInterval',
     'setTimeout',
@@ -8,15 +9,22 @@ const global_mutations = [
     'working',
 ];
 
-const global_actions = [
-    'doneWorking'
+const root_actions = [
+    'doneWorking',
+    'bindData'
 ];
 
-const global_state = [
+const root_state = [
     'busy'
 ];
 
-export default class VuexComponent {
+// --- Local Module properties, available to each module ---
+const local_actions = [
+    'bindLocalState'
+];
+
+
+export default class SpartanComponent {
 
     constructor(args, options) {
         options = options || {};
@@ -60,7 +68,7 @@ export default class VuexComponent {
 
     init(args) {
         if (this._namespace)
-            return this.initNamespace(args);
+            return this.initWithNamespace(args);
 
         args = args || this._args || {};
 
@@ -71,20 +79,20 @@ export default class VuexComponent {
 
         return Object.assign({}, args, {
             methods : {
-                ...mapMutations([this._mutations, ...global_mutations].flat()),
-                ...mapActions([this._actions, ...global_actions].flat()),
+                ...mapMutations([this._mutations, ...root_mutations].flat()),
+                ...mapActions([this._actions, ...root_actions].flat()),
                 ...local.methods
             },
 
             computed : {
                 ...mapGetters(this._getters),
-                ...mapState([this._state, ...global_state].flat()),
+                ...mapState([this._state, ...root_state].flat()),
                 ...local.computed
             }
         });
     }
 
-    initNamespace(args) {
+    initWithNamespace(args) {
         args = args || this._args || {};
 
         let local = {
@@ -94,17 +102,18 @@ export default class VuexComponent {
 
         return Object.assign({}, args, {
             methods : {
-                ...mapMutations(global_mutations),
+                ...mapMutations(root_mutations),
                 ...mapMutations(this._namespace, this._mutations),
-                ...mapActions(global_actions),
+                ...mapActions(root_actions),
                 ...mapActions(this._namespace,this._actions),
+                ...mapActions(this._namespace,local_actions),
                 ...local.methods
             },
 
             computed : {
                 ...mapGetters(this._namespace,this._getters),
                 ...mapState(this._namespace,this._state),
-                ...mapState(global_state),
+                ...mapState(root_state),
                 ...local.computed
             }
         });

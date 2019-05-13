@@ -16,7 +16,12 @@ Object.assign(Vuex.Store.prototype,extensions);
 /**
  * Modules
  */
-import data from './modules/data';
+import settings from './modules/settings';
+
+/**
+ * Firebase persistence
+ */
+import { vuexfireMutations } from "vuexfire";
 
 /**
  * Get the value of str in the same namespace as this
@@ -38,12 +43,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules : {
-        data
+        settings
     },
 
-    state,
-    getters,
-    mutations,
+    mutations : {
+        ...mutations,
+        ...vuexfireMutations
+    },
     actions,
+    getters,
+    state,
     plugins,
 })

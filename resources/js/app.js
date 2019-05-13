@@ -7,9 +7,6 @@
 require('./bootstrap');
 
 import Vue from 'vue';
-import VuexComponent from './VuexComponent';
-
-window.VuexComponent = VuexComponent;
 
 /**
  * The following block of code may be used to automatically register your

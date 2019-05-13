@@ -3,12 +3,6 @@
         <div>
             {{count}} {{name}}
         </div>
-        <div>
-            {{other}}
-        </div>
-        <div>
-            {{sq}}
-        </div>
 
         <input :value="name" @input="changeName"/>
 
@@ -21,26 +15,20 @@
 
 <script>
     import sleep from 'sleep-promise';
-    import Component from '../VuexComponent';
+    import Component from '../SpartanComponent';
 
     export default new Component()
-        .namespace('data')
+        .namespace('settings')
         .state('count','name')
         .mutations('increment','decrement','changeName')
-        .actions('getCachedState','dataFetched')
+        // .actions('getCachedState','dataFetched')
         .init({
 
             async mounted() {
+
                 this.working();
-                await this.getCachedState();
-
+                await this.bindLocalState();
                 this.doneWorking();
-
-                await sleep(5000);
-
-                this.dataFetched({count : 1000, name : 'Ben Kenobi'});
-
-                this.start();
             },
 
             methods : {
@@ -48,7 +36,7 @@
                     this.setInterval({
                         key : 'increment',
                         callback : this.increment,
-                        interval : 100
+                        interval : 1000
                     });
                 },
 
@@ -56,18 +44,6 @@
                     this.clearInterval('increment');
                 }
             },
-
-            computed : {
-                sq() {
-                    return this.count * this.other * this.other;
-                }
-            },
-
-            data() {
-                return {
-                    other : 2
-                }
-            }
         });
 </script>
 
