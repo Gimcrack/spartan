@@ -1,18 +1,26 @@
 import {firestoreAction} from "vuexfire";
-import {db} from "../db";
+import {firebase} from "../../firebase";
 
 export default function(module) {
 
     return {
+
+        /**
+         * Save the local module state to the firestore db
+         */
         persistLocalState : firestoreAction(({ state }) => {
             console.log('persisting state');
-            return db.collection('spartan')
+            return firebase.collection('spartan')
                 .doc(module)
                 .set({ ...state, updated_at : Date.now() });
         }),
 
+        /**
+         * Bind the local state data to the firestore db
+         * @param context
+         */
         bindLocalState(context) {
             context.dispatch('bindData',module,{root : true});
-        }
+        },
     }
 }

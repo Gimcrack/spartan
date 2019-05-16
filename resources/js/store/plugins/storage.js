@@ -1,20 +1,9 @@
-// export const STORAGE_KEY = process.env.APP_NAME || 'spartan';
-// import ls from 'localforage';
-//
-// ls.config({
-//     driver : ls.INDEXEDDB,
-//     name : STORAGE_KEY,
-//     storeName : STORAGE_KEY
-// });
-//
-// export {ls};
-
-export const THROTTLE_INTERVAL = 5000; // 100 ms;
+export const THROTTLE_INTERVAL = 5000;
 
 
 /**
  * Defer to the module's storeState action handler
- *  to determine how to store the state
+ *  to handle storing the state data
  * @param store
  */
 export default function(store) {
@@ -27,6 +16,14 @@ export default function(store) {
          */
         let action = mutation.type.namespace('persistLocalState');
 
-        store.dispatch_throttled(action,THROTTLE_INTERVAL,{rising_edge: false, falling_edge: true});
+        /**
+         * Throttle the dispatched action to prevent spamming any expensive
+         * api calls.
+         */
+        // store.dispatch_throttled(action,THROTTLE_INTERVAL);
+        if ( ! store._actions[action])
+            return;
+
+        store.dispatch(action);
     });
 }

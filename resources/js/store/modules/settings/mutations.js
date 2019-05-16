@@ -16,4 +16,9 @@ export default {
             state[prop] = newState[prop];
         }
     },
+
+    addMessage(state, e) {
+        state.messages.push(e.target.value);
+        e.target.value = '';
+    }
 }

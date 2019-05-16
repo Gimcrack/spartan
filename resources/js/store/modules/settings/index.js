@@ -4,7 +4,7 @@
  */
 const name = 'settings';
 
-import firebase_actions from "../firebase_actions";
+import firebase_actions from "../mixins/firebase_actions";
 import state from './state';
 import mutations from './mutations';
 import getters from './getters';

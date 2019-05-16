@@ -50732,12 +50732,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
-/* harmony default export */ __webpack_exports__["default"] = (new _SpartanComponent__WEBPACK_IMPORTED_MODULE_2__["default"]().namespace('settings').state('count', 'name').mutations('increment', 'decrement', 'changeName') // .actions('getCachedState','dataFetched')
+/* harmony default export */ __webpack_exports__["default"] = (new _SpartanComponent__WEBPACK_IMPORTED_MODULE_2__["default"]().namespace('settings').state('count', 'name', 'messages').mutations('increment', 'decrement', 'changeName', 'addMessage') // .actions('getCachedState','dataFetched')
 .init({
   mounted: function () {
     var _mounted = _asyncToGenerator(
@@ -87219,6 +87216,19 @@ try {
 
 /***/ }),
 
+/***/ "./node_modules/sleep-promise/build/cjs.js":
+/*!*************************************************!*\
+  !*** ./node_modules/sleep-promise/build/cjs.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var cachedSetTimeout=setTimeout;function createSleepPromise(a,b){var c=b.useCachedSetTimeout,d=c?cachedSetTimeout:setTimeout;return new Promise(function(b){d(b,a)})}function sleep(a){function b(a){return e.then(function(){return a})}var c=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{},d=c.useCachedSetTimeout,e=createSleepPromise(a,{useCachedSetTimeout:d});return b.then=function(){return e.then.apply(e,arguments)},b.catch=Promise.resolve().catch,b}module.exports=sleep;
+
+
+/***/ }),
+
 /***/ "./node_modules/sleep-promise/build/esm.mjs":
 /*!**************************************************!*\
   !*** ./node_modules/sleep-promise/build/esm.mjs ***!
@@ -87554,25 +87564,28 @@ var render = function() {
       ]
     },
     [
-      _c("div", [
-        _vm._v(
-          "\n        " + _vm._s(_vm.count) + " " + _vm._s(_vm.name) + "\n    "
-        )
-      ]),
-      _vm._v(" "),
       _c("input", {
-        domProps: { value: _vm.name },
-        on: { input: _vm.changeName }
+        attrs: { placeholder: "Say something..." },
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.addMessage($event)
+          }
+        }
       }),
       _vm._v(" "),
-      _c("button", { on: { click: _vm.start } }, [_vm._v("Start")]),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.stop } }, [_vm._v("Stop")]),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.increment } }, [_vm._v("+1")]),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.decrement } }, [_vm._v("-1")])
-    ]
+      _vm._l(_vm.messages, function(message, idx) {
+        return _c("p", { key: idx }, [
+          _vm._v("\n        " + _vm._s(message) + "\n    ")
+        ])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -101919,96 +101932,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/store/actions.js":
-/*!***************************************!*\
-  !*** ./resources/js/store/actions.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var sleep_promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sleep-promise */ "./node_modules/sleep-promise/build/esm.mjs");
-/* harmony import */ var _plugins_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./plugins/storage */ "./resources/js/store/plugins/storage.js");
-/* harmony import */ var vuexfire__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuexfire */ "./node_modules/vuexfire/dist/vuexfire.esm.js");
-/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./db */ "./resources/js/store/db.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  doneWorking: function () {
-    var _doneWorking = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              commit = _ref.commit;
-              _context.next = 3;
-              return Object(sleep_promise__WEBPACK_IMPORTED_MODULE_1__["default"])(100);
-
-            case 3:
-              commit('_doneWorking');
-
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    function doneWorking(_x) {
-      return _doneWorking.apply(this, arguments);
-    }
-
-    return doneWorking;
-  }(),
-  // async storeState({state}) {
-  //     await ls.setItem(STORAGE_KEY, state)
-  // },
-  bindData: Object(vuexfire__WEBPACK_IMPORTED_MODULE_3__["firestoreAction"])(function (_ref2, key) {
-    var bindFirestoreRef = _ref2.bindFirestoreRef;
-    return bindFirestoreRef(key, _db__WEBPACK_IMPORTED_MODULE_4__["db"].collection('spartan').doc(key));
-  })
-});
-
-/***/ }),
-
-/***/ "./resources/js/store/db.js":
-/*!**********************************!*\
-  !*** ./resources/js/store/db.js ***!
-  \**********************************/
-/*! exports provided: db */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "db", function() { return db; });
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_0__);
- // Get a Firestore instance
-
-var db = firebase__WEBPACK_IMPORTED_MODULE_0___default.a.initializeApp({
-  projectId: Object({"MIX_PUSHER_APP_CLUSTER":"mt1","MIX_PUSHER_APP_KEY":"","NODE_ENV":"development"}).FIREBASE_PROJECT_ID || 'api-project-329542115952'
-}).firestore(); // Export types that exists in Firestore
-// export { TimeStamp, GeoPoint } = firebase.firestore;
-// if using Firebase JS SDK < 5.8.0
-// db.settings({ timestampsInSnapshots: true });
-
-/***/ }),
-
 /***/ "./resources/js/store/extensions/index.js":
 /*!************************************************!*\
   !*** ./resources/js/store/extensions/index.js ***!
@@ -102027,75 +101950,109 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  dispatch_throttled: function dispatch_throttled(action, timeout, options) {
-    var _this = this;
-
-    options = Object.assign({}, {
-      falling_edge: true,
-      rising_edge: true
-    }, options || {});
+  store: {
     /**
-     * Make sure the action exists and is eligible to dispatch
+     * Throttle the dispatched action
+     * @param action
+     * @param timeout
+     * @param options
      */
+    dispatch_throttled: function dispatch_throttled(action, timeout, options) {
+      var _this = this;
 
-    if (!this._actions[action] || this.state.timeouts[action] != null) return;
-    if (options.rising_edge) this.dispatch(action);
-    /**
-     * Set the timeout for dispatching the action
-     */
+      options = Object.assign({}, {
+        falling_edge: true,
+        rising_edge: true
+      }, options || {});
+      /**
+       * Make sure the action exists and is eligible to dispatch
+       */
 
-    this.commit('setTimeout', {
-      key: action,
-      callback: function () {
-        var _callback = _asyncToGenerator(
-        /*#__PURE__*/
-        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  if (!options.falling_edge) {
+      if (!this._actions[action] || this.state.timeouts[action] != null) return;
+      if (options.rising_edge) this.dispatch(action);
+      /**
+       * Set the timeout for dispatching the action
+       */
+
+      this.commit('setTimeout', {
+        key: action,
+        callback: function () {
+          var _callback = _asyncToGenerator(
+          /*#__PURE__*/
+          _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    if (!options.falling_edge) {
+                      _context.next = 3;
+                      break;
+                    }
+
                     _context.next = 3;
-                    break;
-                  }
+                    return _this.dispatch(action);
 
-                  _context.next = 3;
-                  return _this.dispatch(action);
+                  case 3:
+                    _this.commit('clearTimeout', action);
 
-                case 3:
-                  _this.commit('clearTimeout', action);
-
-                case 4:
-                case "end":
-                  return _context.stop();
+                  case 4:
+                  case "end":
+                    return _context.stop();
+                }
               }
-            }
-          }, _callee);
-        }));
+            }, _callee);
+          }));
 
-        function callback() {
-          return _callback.apply(this, arguments);
-        }
+          function callback() {
+            return _callback.apply(this, arguments);
+          }
 
-        return callback;
-      }(),
-      timeout: timeout
-    });
+          return callback;
+        }(),
+        timeout: timeout
+      });
+    }
+  },
+  string: {
+    /**
+     * Get the value of str in the same namespace as this
+     * @param str
+     * @returns {string}
+     */
+    namespace: function namespace(str) {
+      var ret = this.split('/').splice(0, 1);
+      if ((str || '').trim()) ret.push(str);
+      return ret.join('/');
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./resources/js/store/getters.js":
-/*!***************************************!*\
-  !*** ./resources/js/store/getters.js ***!
-  \***************************************/
-/*! exports provided: default */
+/***/ "./resources/js/store/firebase.js":
+/*!****************************************!*\
+  !*** ./resources/js/store/firebase.js ***!
+  \****************************************/
+/*! exports provided: firebase, TimeStamp, GeoPoint */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firebase", function() { return firebase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimeStamp", function() { return TimeStamp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GeoPoint", function() { return GeoPoint; });
+/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
+/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_0__);
+ // Get a Firestore instance
+
+var firebase = firebase__WEBPACK_IMPORTED_MODULE_0___default.a.initializeApp({
+  projectId: Object({"MIX_PUSHER_APP_CLUSTER":"mt1","MIX_PUSHER_APP_KEY":"","NODE_ENV":"development"}).FIREBASE_PROJECT_ID || 'api-project-329542115952'
+}).firestore(); // Export types that exists in Firestore
+
+var _FB$firestore = firebase__WEBPACK_IMPORTED_MODULE_0___default.a.firestore,
+    TimeStamp = _FB$firestore.TimeStamp,
+    GeoPoint = _FB$firestore.GeoPoint;
+
 
 /***/ }),
 
@@ -102111,14 +102068,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./state */ "./resources/js/store/state.js");
-/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
-/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/mutations.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
-/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins */ "./resources/js/store/plugins.js");
-/* harmony import */ var _extensions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions */ "./resources/js/store/extensions/index.js");
-/* harmony import */ var _modules_settings__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/settings */ "./resources/js/store/modules/settings/index.js");
-/* harmony import */ var vuexfire__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuexfire */ "./node_modules/vuexfire/dist/vuexfire.esm.js");
+/* harmony import */ var _extensions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./extensions */ "./resources/js/store/extensions/index.js");
+/* harmony import */ var _modules_settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/settings */ "./resources/js/store/modules/settings/index.js");
+/* harmony import */ var _root__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./root */ "./resources/js/store/root/index.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -102128,61 +102080,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
-
-/**
- * Load our extensions into the Store prototype
- */
-
-
-Object.assign(vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store.prototype, _extensions__WEBPACK_IMPORTED_MODULE_7__["default"]);
-/**
- * Modules
- */
-
-
-/**
- * Firebase persistence
- */
-
-
-/**
- * Get the value of str in the same namespace as this
- * @param str
- * @returns {string}
- */
-
-String.prototype.namespace = function (str) {
-  var ret = this.split('/').splice(0, 1);
-  if ((str || '').trim()) ret.push(str);
-  return ret.join('/');
-};
-
+Object.assign(vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store.prototype, _extensions__WEBPACK_IMPORTED_MODULE_2__["default"].store);
+Object.assign(String.prototype, _extensions__WEBPACK_IMPORTED_MODULE_2__["default"].string);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store(_objectSpread({
   modules: {
-    settings: _modules_settings__WEBPACK_IMPORTED_MODULE_8__["default"]
-  },
-  mutations: _objectSpread({}, _mutations__WEBPACK_IMPORTED_MODULE_4__["default"], vuexfire__WEBPACK_IMPORTED_MODULE_9__["vuexfireMutations"]),
-  actions: _actions__WEBPACK_IMPORTED_MODULE_5__["default"],
-  getters: _getters__WEBPACK_IMPORTED_MODULE_3__["default"],
-  state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
-  plugins: _plugins__WEBPACK_IMPORTED_MODULE_6__["default"]
-}));
+    settings: _modules_settings__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }
+}, _root__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
-/***/ "./resources/js/store/modules/firebase_actions.js":
-/*!********************************************************!*\
-  !*** ./resources/js/store/modules/firebase_actions.js ***!
-  \********************************************************/
+/***/ "./resources/js/store/modules/mixins/firebase_actions.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/store/modules/mixins/firebase_actions.js ***!
+  \***************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuexfire__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuexfire */ "./node_modules/vuexfire/dist/vuexfire.esm.js");
-/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../db */ "./resources/js/store/db.js");
+/* harmony import */ var _firebase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../firebase */ "./resources/js/store/firebase.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -102191,13 +102110,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = (function (module) {
   return {
+    /**
+     * Save the local module state to the firestore db
+     */
     persistLocalState: Object(vuexfire__WEBPACK_IMPORTED_MODULE_0__["firestoreAction"])(function (_ref) {
       var state = _ref.state;
       console.log('persisting state');
-      return _db__WEBPACK_IMPORTED_MODULE_1__["db"].collection('spartan').doc(module).set(_objectSpread({}, state, {
+      return _firebase__WEBPACK_IMPORTED_MODULE_1__["firebase"].collection('spartan').doc(module).set(_objectSpread({}, state, {
         updated_at: Date.now()
       }));
     }),
+
+    /**
+     * Bind the local state data to the firestore db
+     * @param context
+     */
     bindLocalState: function bindLocalState(context) {
       context.dispatch('bindData', module, {
         root: true
@@ -102248,7 +102175,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _firebase_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../firebase_actions */ "./resources/js/store/modules/firebase_actions.js");
+/* harmony import */ var _mixins_firebase_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/firebase_actions */ "./resources/js/store/modules/mixins/firebase_actions.js");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./state */ "./resources/js/store/modules/settings/state.js");
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/modules/settings/mutations.js");
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./getters */ "./resources/js/store/modules/settings/getters.js");
@@ -102272,7 +102199,7 @@ var name = 'settings';
   state: _state__WEBPACK_IMPORTED_MODULE_1__["default"],
   mutations: _mutations__WEBPACK_IMPORTED_MODULE_2__["default"],
   getters: _getters__WEBPACK_IMPORTED_MODULE_3__["default"],
-  actions: _objectSpread({}, _actions__WEBPACK_IMPORTED_MODULE_4__["default"], Object(_firebase_actions__WEBPACK_IMPORTED_MODULE_0__["default"])(name))
+  actions: _objectSpread({}, _actions__WEBPACK_IMPORTED_MODULE_4__["default"], Object(_mixins_firebase_actions__WEBPACK_IMPORTED_MODULE_0__["default"])(name))
 });
 
 /***/ }),
@@ -102300,6 +102227,10 @@ __webpack_require__.r(__webpack_exports__);
     for (var prop in newState) {
       state[prop] = newState[prop];
     }
+  },
+  addMessage: function addMessage(state, e) {
+    state.messages.push(e.target.value);
+    e.target.value = '';
   }
 });
 
@@ -102316,21 +102247,213 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   count: 0,
-  name: 'Jeremy Bloomstrom'
+  name: 'Jeremy Bloomstrom',
+  messages: []
 });
 
 /***/ }),
 
-/***/ "./resources/js/store/mutations.js":
-/*!*****************************************!*\
-  !*** ./resources/js/store/mutations.js ***!
-  \*****************************************/
+/***/ "./resources/js/store/plugins/storage.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/plugins/storage.js ***!
+  \***********************************************/
+/*! exports provided: THROTTLE_INTERVAL, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "THROTTLE_INTERVAL", function() { return THROTTLE_INTERVAL; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var THROTTLE_INTERVAL = 5000;
+/**
+ * Defer to the module's storeState action handler
+ *  to handle storing the state data
+ * @param store
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = (function (store) {
+  store.subscribe(
+  /*#__PURE__*/
+  function () {
+    var _ref = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(mutation) {
+      var action;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              /**
+               * Determine the namespace of the mutation. We use the namespace
+               * to determine which action to fire. For example, if we have
+               * a module namespaced to 'data' we call data/storeState
+               */
+              action = mutation.type.namespace('persistLocalState');
+              /**
+               * Throttle the dispatched action to prevent spamming any expensive
+               * api calls.
+               */
+              // store.dispatch_throttled(action,THROTTLE_INTERVAL);
+
+              if (store._actions[action]) {
+                _context.next = 3;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 3:
+              store.dispatch(action);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/root/actions.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/root/actions.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sleep_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sleep-promise */ "./node_modules/sleep-promise/build/esm.mjs");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sleep-promise/build/cjs */ "./node_modules/sleep-promise/build/cjs.js");
+/* harmony import */ var sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuexfire__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuexfire */ "./node_modules/vuexfire/dist/vuexfire.esm.js");
+/* harmony import */ var _firebase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../firebase */ "./resources/js/store/firebase.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  doneWorking: function () {
+    var _doneWorking = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_1___default()(1000);
+
+            case 3:
+              commit('_doneWorking');
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function doneWorking(_x) {
+      return _doneWorking.apply(this, arguments);
+    }
+
+    return doneWorking;
+  }(),
+  bindData: Object(vuexfire__WEBPACK_IMPORTED_MODULE_2__["firestoreAction"])(function (_ref2, key) {
+    var bindFirestoreRef = _ref2.bindFirestoreRef;
+    return bindFirestoreRef(key, _firebase__WEBPACK_IMPORTED_MODULE_3__["firebase"].collection('spartan').doc(key));
+  })
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/root/getters.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/root/getters.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./resources/js/store/root/index.js":
+/*!******************************************!*\
+  !*** ./resources/js/store/root/index.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./resources/js/store/root/state.js");
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters */ "./resources/js/store/root/getters.js");
+/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/root/mutations.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./resources/js/store/root/actions.js");
+/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins */ "./resources/js/store/root/plugins.js");
+/* harmony import */ var vuexfire__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuexfire */ "./node_modules/vuexfire/dist/vuexfire.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+/**
+ * Firebase persistence
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: _state__WEBPACK_IMPORTED_MODULE_0__["default"],
+  getters: _getters__WEBPACK_IMPORTED_MODULE_1__["default"],
+  mutations: _objectSpread({}, _mutations__WEBPACK_IMPORTED_MODULE_2__["default"], vuexfire__WEBPACK_IMPORTED_MODULE_5__["vuexfireMutations"]),
+  actions: _actions__WEBPACK_IMPORTED_MODULE_3__["default"],
+  plugins: _plugins__WEBPACK_IMPORTED_MODULE_4__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/root/mutations.js":
+/*!**********************************************!*\
+  !*** ./resources/js/store/root/mutations.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sleep-promise/build/cjs */ "./node_modules/sleep-promise/build/cjs.js");
+/* harmony import */ var sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sleep_promise_build_cjs__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   setTimeout: function (_setTimeout) {
@@ -102404,100 +102527,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/store/plugins.js":
-/*!***************************************!*\
-  !*** ./resources/js/store/plugins.js ***!
-  \***************************************/
+/***/ "./resources/js/store/root/plugins.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/root/plugins.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _plugins_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./plugins/storage */ "./resources/js/store/plugins/storage.js");
+/* harmony import */ var _plugins_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../plugins/storage */ "./resources/js/store/plugins/storage.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ([_plugins_storage__WEBPACK_IMPORTED_MODULE_0__["default"]]);
 
 /***/ }),
 
-/***/ "./resources/js/store/plugins/storage.js":
-/*!***********************************************!*\
-  !*** ./resources/js/store/plugins/storage.js ***!
-  \***********************************************/
-/*! exports provided: THROTTLE_INTERVAL, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "THROTTLE_INTERVAL", function() { return THROTTLE_INTERVAL; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-// export const STORAGE_KEY = process.env.APP_NAME || 'spartan';
-// import ls from 'localforage';
-//
-// ls.config({
-//     driver : ls.INDEXEDDB,
-//     name : STORAGE_KEY,
-//     storeName : STORAGE_KEY
-// });
-//
-// export {ls};
-var THROTTLE_INTERVAL = 5000; // 100 ms;
-
-/**
- * Defer to the module's storeState action handler
- *  to determine how to store the state
- * @param store
- */
-
-/* harmony default export */ __webpack_exports__["default"] = (function (store) {
-  store.subscribe(
-  /*#__PURE__*/
-  function () {
-    var _ref = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(mutation) {
-      var action;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              /**
-               * Determine the namespace of the mutation. We use the namespace
-               * to determine which action to fire. For example, if we have
-               * a module namespaced to 'data' we call data/storeState
-               */
-              action = mutation.type.namespace('persistLocalState');
-              store.dispatch_throttled(action, THROTTLE_INTERVAL, {
-                rising_edge: false,
-                falling_edge: true
-              });
-
-            case 2:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }());
-});
-
-/***/ }),
-
-/***/ "./resources/js/store/state.js":
-/*!*************************************!*\
-  !*** ./resources/js/store/state.js ***!
-  \*************************************/
+/***/ "./resources/js/store/root/state.js":
+/*!******************************************!*\
+  !*** ./resources/js/store/root/state.js ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

@@ -1,4 +1,4 @@
-import sleep from 'sleep-promise';
+import sleep from 'sleep-promise/build/cjs';
 
 export default {
     setTimeout(state, {key, callback, timeout}) {
